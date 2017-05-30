@@ -14,6 +14,16 @@ import {
 } from 'react-native';
 import _ from 'lodash';
 
+/**
+ * Chains several function calls together.
+ * Passes the same arguments to all of them.
+ */
+const _chainFunctions = (...functions) => () => {
+    functions.forEach(f => {
+        if(f) f(arguments);
+    });
+}
+
 export default class VideoPlayer extends Component {
 
     constructor( props ) {
@@ -66,10 +76,10 @@ export default class VideoPlayer extends Component {
         this.events = {
             onError: this.props.onError || this._onError.bind( this ),
             onEnd: this.props.onEnd || this._onEnd.bind( this ),
-            onScreenPress: this._onScreenPress.bind( this ),
-            onLoadStart: this._onLoadStart.bind( this ),
-            onProgress: this._onProgress.bind( this ),
-            onLoad: this._onLoad.bind( this ),
+            onScreenPress: _chainFunctions(this._onScreenPress.bind( this ), this.props.onScreenPress),
+            onLoadStart: _chainFunctions(this._onLoadStart.bind( this ), this.props.onLoadStart),
+            onProgress: _chainFunctions(this._onProgress.bind( this ), this.props.onProgress),
+            onLoad: _chainFunctions(this._onLoad.bind( this ), this.props.onLoad),
         };
 
         /**
