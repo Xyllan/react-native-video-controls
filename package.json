@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "lodash": "^4.16.4",
-    "react-native-video": "^1.0.0"
+    "react-native-video": "git+https://github.com/react-native-community/react-native-video.git"
   },
   "peerDependencies": {
     "react-native": "^0.42.0"
